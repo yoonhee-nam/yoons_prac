@@ -15,6 +15,8 @@ data class Image(
         val collection : String,
         @SerializedName("thumbnail_url")
         val thumbnailUrl : String,
+        //이거랑
+
         @SerializedName("image_url")
         val imageUrl :	String,
         val width : Int,
@@ -24,6 +26,7 @@ data class Image(
         @SerializedName("doc_url")
         val docUrl : String,
         val datetime : String
+        //이거
 
     )
     data class Meta(

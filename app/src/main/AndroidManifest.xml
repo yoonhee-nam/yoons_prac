@@ -3,7 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!--    http통신을 위한 인터넷 사용권한-->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET"/>
+
 
     <application
         android:allowBackup="true"

@@ -9,8 +9,8 @@ import retrofit2.http.Query
 //Retrofit Interface
 //GET 요청을 하기 위한 인터페이스
 interface Image_Interface {
-    @GET("v2/search/imag")
-    suspend fun searchImage(
+    @GET("v2/search/image")
+     fun searchImage(
         //인증 방식, 서비스 앱에서 REST API 키로 인증 요청
         @Header("Authorization") apiKey: String,
         //검색을 원하는 질의어
