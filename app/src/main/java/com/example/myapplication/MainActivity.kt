@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.model.Image
@@ -13,8 +14,7 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     private val tabTextList = listOf("Main","Like")
-
-    private var imageList = ArrayList<SearchData>()
+    var likeItems: ArrayList<SearchData> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -25,20 +25,23 @@ class MainActivity : AppCompatActivity() {
             tab.text = tabTextList[pos]
         }.attach()
     }
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu., menu)
-//        return true
-//    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search, menu)
+        return true
+    }
 
 
-    var likeimage: ArrayList<SearchData> = ArrayList()
+
     fun addLikedImage(image : SearchData){
-        if(!likeimage.contains(image)){
-            likeimage.add(image)
+        if(!likeItems.contains(image)){
+            Log.d("addLike","nyh get??")
+
+            likeItems.add(image)
+            Log.d("addLike","nyh ${likeItems.size}??")
         }
     }
 
     fun removeLikeImage(image: SearchData){
-        imageList.remove(image)
+        likeItems.remove(image)
     }
 }

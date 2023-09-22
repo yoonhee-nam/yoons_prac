@@ -10,14 +10,12 @@ import com.google.gson.annotations.SerializedName
 @VersionedParcelize
 data class Image(
     val documents: ArrayList<Documents>,
-    val meta: Meta,
+    val meta: Meta
 ) {
     data class Documents(
         val collection: String,
         @SerializedName("thumbnail_url")
         val thumbnailUrl: String,
-        //이거랑
-
         @SerializedName("image_url")
         val imageUrl: String,
         val width: Int,
@@ -26,9 +24,7 @@ data class Image(
         val displaySitename: String,
         @SerializedName("doc_url")
         val docUrl: String,
-        val datetime: String,
-        //이거
-
+        val datetime: String
     )
 
     data class Meta(
@@ -39,14 +35,6 @@ data class Image(
         val isEnd: Boolean?
     )
 }
-
-data class SearchData(
-    var title: String,
-    var dateTime: String,
-    var url: String,
-    var like: Boolean = false
-)
-
 
 //data class ImageSearchResponse(
 //    @SerializedName("meta")

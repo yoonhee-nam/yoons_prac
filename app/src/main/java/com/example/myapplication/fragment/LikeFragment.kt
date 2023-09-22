@@ -18,62 +18,53 @@ private const val ARG_PARAM1 = "param1"
 
 class LikeFragment : Fragment() {
 
-    private var binding: FragmentLikeBinding? = null
     private lateinit var Context1 : Context
-    private var likedImage: List<SearchData> = listOf()
+    private var binding: FragmentLikeBinding? = null
     private lateinit var adapter: LikeFragAdapter
 
-
-    private var param1: String? = null
+    private var likedImage: List<SearchData> = listOf()
 
     override fun onAttach(context: Context){
         super.onAttach(context)
         Context1 = context
     }
 
+    override fun onStart() {
+        super.onStart()
+    }
+
     override fun onResume() {
         super.onResume()
         val main = activity as MainActivity
-        likedImage = main.likeimage
-        adapter.image = likedImage.toMutableList()
+        likedImage = main.likeItems
+        adapter.image.clear()
+        adapter.image.addAll(likedImage)
+        Log.d("LikeFrag","nyh ${likedImage.size}.!@")
         adapter.notifyDataSetChanged()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        _binding = FragmentLikeBinding.inflate(inflater, container, false)
+//        val mainActivity = activity as MainActivity
+//
+//        likedImage = mainActivity.likeItems
 
         adapter = LikeFragAdapter(Context1).apply {
             image = likedImage.toMutableList()
         }
-            binding = FragmentLikeBinding.inflate(inflater, container, false).apply {
-                likeRecycler.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            }
-        return binding?.root
+        binding = FragmentLikeBinding.inflate(inflater, container, false).apply {
+            likeRecycler.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
-
-
+        binding?.likeRecycler?.adapter = adapter
+        return binding?.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
 
+        binding = null
+    }
 
-
-
-//    companion object {
-//
-//        fun newInstance(param1: String) =
-//            LikeFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1,param1)
-//                }
-//            }
-//    }
+}
