@@ -1,25 +1,26 @@
-package com.example.myapplication
+package com.example.myapplication.fragment
 
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.myapplication.Constants
 import com.example.myapplication.api.Image_client
 import com.example.myapplication.databinding.FragmentMainBinding
 import com.example.myapplication.model.Image
+import com.example.myapplication.model.SearchData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Response
 import java.lang.Exception
-
 
 class MainFragment : Fragment() {
 
@@ -40,9 +41,9 @@ class MainFragment : Fragment() {
         binding = FragmentMainBinding.inflate(inflater, container, false)
 
         recyclerView()
-//        searchListener()
 
-        var imageList = listOf<Image.Documents>()
+
+        var imageList = listOf<SearchData>()
 
         binding.button.setOnClickListener {
             Log.d("ButtonClick", "nyh Button clicked")
@@ -58,7 +59,13 @@ class MainFragment : Fragment() {
             setHasFixedSize(true)
         }
 
+
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
     private fun recyclerView() {
@@ -97,7 +104,7 @@ class MainFragment : Fragment() {
                 )
                 response.enqueue(object : retrofit2.Callback<Image> {
                     override fun onResponse(
-                        call: retrofit2.Call<Image>,
+                        call: Call<Image>,
                         response: Response<Image>
                     ) {
                         Log.d("initList()", "nyh ${response.body()?.meta?.totalCount}")

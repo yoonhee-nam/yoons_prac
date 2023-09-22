@@ -1,21 +1,22 @@
-package com.example.myapplication
-
+package com.example.myapplication.fragment
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.Glide.init
 import com.example.myapplication.databinding.RecyclerItemBinding
 import com.example.myapplication.model.Image
-
+import com.example.myapplication.model.SearchData
 
 class MainFragAdapter(private val mcontext: Context) :
     RecyclerView.Adapter<MainFragAdapter.MyView>() {
-    private var imageList = listOf<Image.Documents>()
+    private var imageList = listOf<SearchData>()
+
 
 
 //    fun clearItem() {
@@ -24,11 +25,26 @@ class MainFragAdapter(private val mcontext: Context) :
 //    }
 
     inner class MyView(private val binding: RecyclerItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
 
         var iv: ImageView = binding.iv
         var title: TextView = binding.tvTitle
+        var like_image : ImageView = binding.like
         var datetime: TextView = binding.tvLowPrice
+        var img_const : ConstraintLayout = binding.searchImgConstraint
+
+        init {
+            like_image.visibility = View.GONE
+            iv.setOnClickListener(this)
+            img_const.setOnClickListener(this)
+        }
+
+        override fun onClick(view: View?) {
+            val position = adapterPosition.takeIf { it != RecyclerView.NO_POSITION } ?: return
+            
+        }
+
 
     }
 
@@ -38,16 +54,19 @@ class MainFragAdapter(private val mcontext: Context) :
     }
 
     override fun onBindViewHolder(holder: MyView, position: Int) {
+
         val currentItem = imageList[position]
 
         Glide.with(mcontext)
-            .load(currentItem.thumbnailUrl)
+            .load(currentItem.url)
             .into(holder.iv)
 
-        holder.title.text = currentItem.displaySitename
-        holder.datetime.text = currentItem.datetime
-
+        holder.title.text = currentItem.title
+        holder.datetime.text = currentItem.dateTime
     }
+
+
+
 
     override fun getItemCount(): Int {
         return imageList.size
@@ -56,4 +75,6 @@ class MainFragAdapter(private val mcontext: Context) :
     fun setList(list: List<Image.Documents>) {
         imageList = list
     }
+
+
 }
